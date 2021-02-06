@@ -6,8 +6,8 @@
     "node": "12.x"
   },
   "scripts": {
-    "client": "cd client && npm start",
-    "server": "cd server && node server.js",
+    "client": "cd client && npm install && npm start",
+    "server": "npm install && cd server && node server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "npm run dev",
     "test": "node test.js"
@@ -17,9 +17,9 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
+    "concurrently": "^3.5.0",
     "got": "^11.3.0",
-    "tape": "^4.7.0",
-    "concurrently": "^3.5.0"
+    "tape": "^4.7.0"
   },
   "repository": {
     "type": "git",
