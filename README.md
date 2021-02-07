@@ -1,39 +1,30 @@
-# node-js-getting-started
+# Rando
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+A password generator built with React and Express.
 
-This application supports the [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+This is a minimal demo of using Create React App to bootstrap a React project, connect the React app to an Express backend, and deploy the whole thing to Heroku.
 
-## Running Locally
+Read the blog post: [Create React App with Express in
+Production](https://daveceddia.com/create-react-app-express-production/)
 
-Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
+## Prerequisites
 
-```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
-$ npm install
-$ npm start
-```
+You need to [sign up](https://heroku.com/) for a Heroku account if you don't already have one, and install the [Heroku toolbelt](https://devcenter.heroku.com/articles/heroku-cli). (On a Mac with Homebrew, just run `brew install heroku`).
 
-Your app should now be running on [localhost:5000](http://localhost:5000/).
+## Deploy to Heroku
 
-## Deploying to Heroku
+To deploy:
 
-```
-$ heroku create
-$ git push heroku main
-$ heroku open
-```
-or
+1. Clone this repo.
+2. Inside the repo directory, run `heroku create` (requires [Heroku toolbelt](https://devcenter.heroku.com/articles/heroku-cli)).
+3. Run `git push heroku master` to simultaneously deploy the frontend + backend to Heroku.
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+### Using NPM
 
-## Documentation
+Check out the `npm` branch if you're not using Yarn:
 
-For more information about using Node.js on Heroku, see these Dev Center articles:
+`git checkout npm`
 
-- [Getting Started on Heroku with Node.js](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+And then once on that branch, the deploy command is:
+
+`git push heroku npm:master`
