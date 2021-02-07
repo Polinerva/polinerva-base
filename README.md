@@ -7,24 +7,29 @@ This is a minimal demo of using Create React App to bootstrap a React project, c
 Read the blog post: [Create React App with Express in
 Production](https://daveceddia.com/create-react-app-express-production/)
 
-## Prerequisites
+----------------------------------------------------
 
-You need to [sign up](https://heroku.com/) for a Heroku account if you don't already have one, and install the [Heroku toolbelt](https://devcenter.heroku.com/articles/heroku-cli). (On a Mac with Homebrew, just run `brew install heroku`).
+## Database
 
-## Deploy to Heroku
+//Variáveis para rodar localmente 
 
-To deploy:
+-- for Mac and Linux
+export DATABASE_URL=postgres://$(whoami)
+-- for Windows
+set DATABASE_URL=postgres://$(whoami)
 
-1. Clone this repo.
-2. Inside the repo directory, run `heroku create` (requires [Heroku toolbelt](https://devcenter.heroku.com/articles/heroku-cli)).
-3. Run `git push heroku master` to simultaneously deploy the frontend + backend to Heroku.
+### Acessar o banco remotamente
 
-### Using NPM
+heroku pg:psql postgresql-globular-48592 --app polinerva
 
-Check out the `npm` branch if you're not using Yarn:
+### Coloque essas variáveis no .env
 
-`git checkout npm`
+crie um arquivo .env e coloque essas variáveis:
 
-And then once on that branch, the deploy command is:
-
-`git push heroku npm:master`
+```bash
+  DATABASE_NAME=<nome_banco_de_dados>
+  DATABASE_USER=<nome_usuário>
+  DATABASE_PASSWORD=<senha_usuário>
+  DATABASE_HOST=<nome_host>
+  DATABASE_PORT=<porta_host>
+```
