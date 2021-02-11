@@ -1,8 +1,23 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const path = require('path');
+
+const db = require('./queries');
+
+
 const generatePassword = require('password-generator');
 
 const app = express();
+
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
+
+
 const { Client } = require('pg');
 
 var db_conn = {    
@@ -44,6 +59,18 @@ app.get('/api/passwords', (req, res) => {
 
   console.log(`Sent ${count} passwords`);
 });
+
+app.get('/api/teste', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
+})
+
+//DATABASE QUERIES
+app.get('/api/users', db.getUsers)
+app.get('/api/users/:id', db.getUserById)
+app.post('/api/users', db.createUser)
+app.put('/api/users/:id', db.updateUser)
+app.delete('/api/users/:id', db.deleteUser)
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
