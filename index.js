@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
-//const db = require('./queries');
+const db = require('./queries');
 
 
 const generatePassword = require('password-generator');
@@ -20,6 +20,11 @@ app.use(
 
 const { Client } = require('pg');
 
+
+
+/*
+//ACHAR UMA FORMA DISSO AQUI FUNCIONAR!!
+
 var db_conn = {    
   host: process.env.PGHOST,
   port: process.env.PGPORT,
@@ -27,11 +32,17 @@ var db_conn = {
   user: process.env.PGUSER,
   password: process.env.PGPASSWORD
 };
+*/
 
-const client = new Client(db_conn);
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 client.connect();
-
 
 client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
   if (err) throw err;
@@ -64,14 +75,14 @@ app.get('/api/teste', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
 })
 
-/*
+
 //DATABASE QUERIES
 app.get('/api/users', db.getUsers)
 app.get('/api/users/:id', db.getUserById)
 app.post('/api/users', db.createUser)
 app.put('/api/users/:id', db.updateUser)
 app.delete('/api/users/:id', db.deleteUser)
-*/
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
