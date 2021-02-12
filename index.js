@@ -3,9 +3,6 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
-const db = require('./queries');
-
-
 const generatePassword = require('password-generator');
 
 const app = express();
@@ -49,7 +46,6 @@ client.query('SELECT table_schema,table_name FROM information_schema.tables;', (
   for (let row of res.rows) {
     console.log(JSON.stringify(row));
   }
-  client.end();
 });
 
 
@@ -77,11 +73,66 @@ app.get('/api/teste', (request, response) => {
 
 
 //DATABASE QUERIES
-app.get('/api/users', db.getUsers)
-app.get('/api/users/:id', db.getUserById)
-app.post('/api/users', db.createUser)
-app.put('/api/users/:id', db.updateUser)
-app.delete('/api/users/:id', db.deleteUser)
+app.get('/api/users', (request, response) => {
+  client.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+});
+
+app.get('/api/users/:id', (request, response) => {
+  const id = parseInt(request.params.id)
+   
+  client.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+
+    response.status(200).json(results.rows)
+  })
+});
+
+app.post('/api/users', (request, response) => {
+  const { name, email } = request.body
+
+  client.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
+    if (error) {
+      throw error
+    }
+    //response.status(201).send(`${results} teste AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH`);
+    response.status(201).send(`User added with ID: ${JSON.stringify(results)}`);
+  })
+});
+
+
+app.put('/api/users/:id', (request, response) => {
+  const id = parseInt(request.params.id)
+  const { name, email } = request.body
+
+  client.query(
+    'UPDATE users SET name = $1, email = $2 WHERE id = $3',
+    [name, email, id],
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      response.status(200).send(`User modified with ID: ${id}`)
+    }
+  )
+});
+
+app.delete('/api/users/:id', (request, response) => {
+  const id = parseInt(request.params.id)
+
+  client.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).send(`User deleted with ID: ${id}`)
+  })
+});
 
 
 // The "catchall" handler: for any request that doesn't
