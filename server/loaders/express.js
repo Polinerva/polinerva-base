@@ -16,6 +16,8 @@ module.exports = {
     console.log(__dirname);
     app.use('/api/', routes());
 
+    console.log(__dirname);
+
     const rootDir = /.*\/polinerva-base\//g.exec(__dirname)[0];
 
     app.use(express.static(path.join(rootDir, 'client/build')));
