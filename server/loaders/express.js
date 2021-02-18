@@ -23,6 +23,7 @@ module.exports = {
 
     app.use(express.static(path.join(rootDir, 'client/build')));
     app.get("/service-worker.js", (req, res) => {
+      res.sendFile(path.resolve(rootDir, "client/public", "service-worker.js"));
       res.sendFile(path.join(rootDir+'/client/build/service-worker.js'));
     });
     app.get('*', (req, res) => {
