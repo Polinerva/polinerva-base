@@ -17,7 +17,9 @@ module.exports = {
     app.use('/api/', routes());
 
     const rgx = /.*\/polinerva-base\//g.exec(__dirname);
-    const rootDir = rgx ? rgx[0] : '~/';
+    const rootDir = rgx ? rgx[0] : '/app/';
+
+    console.log(`Root Dir: ${rootDir}`);
 
     app.use(express.static(path.join(rootDir, 'client/build')));
     app.get('*', (req, res) => {
